@@ -67,3 +67,39 @@ There are many process in the system, every process have their own memoery segme
 
 ## Process Creation:
 
+There are two ways to create a Process
+
+1. By using commands
+2. By using fork() System call
+
+### **1. By using commands**
+
+&rarr; From the executable file process can be created by using command __./a.out__ where a.out is the executable file obtained after compilation.
+
+![](./Executable%20file.png)
+
+### **2. By using fork() System calls**
+
+### System call: 
+It is used in user space to send the resuest to the sub-system in kernel space. Every system call has an equivalent call in kernal space which starts with **sys_**.
+
+&rarr; fork() system call can be used to create a child process and the process from where the fork() is invoked is called the parent process.
+
+&rarr; Once we call fork() control immediately jumps to kernel space invoking an equivalent function in kernel starting with sys_. ofrk() is actually sending request to kernel space subsystem.
+
+        (or)
+
+&rarr;When we call fork() we are sending request to process management subsystem present in kernel space.(i.e, Kernel space process management)
+
+__NOTE : -__
+
+A Process which invoke fork system call is called **parent proccess** and the new process get created is called **child process**.
+
+![](../Images/Child%20process.png)
+
+&rarr;Thus Page table and fd table of parent process get copied to the child process.
+
+&rarr; parent and child process are execute different block of code.
+
+&rarr;Before fork() invokation there is only one process but after fork() invokation there are two process i.e, child process and parent process.
+
