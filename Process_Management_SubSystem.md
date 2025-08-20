@@ -95,7 +95,7 @@ __NOTE : -__
 
 A Process which invoke fork system call is called **parent proccess** and the new process get created is called **child process**.
 
-![](../Images/Child%20process.png)
+![](./images/Child%20process.png)
 
 &rarr;Thus Page table and fd table of parent process get copied to the child process.
 
