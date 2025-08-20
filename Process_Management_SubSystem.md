@@ -63,7 +63,7 @@ There are many process in the system, every process have their own memoery segme
   BSS segment=Block started by symbol used to store the uninitialized global vatiables.
   Data Segment= Data segment is used to store the initialized global variables and intitalized static local variables
   
-![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9APxkj0xClmrU3PpMZglHQkx446nQPG6lA&s)
+![](./Screenshot%202025-08-20%20225316.png)
 
 ## Process Creation:
 
