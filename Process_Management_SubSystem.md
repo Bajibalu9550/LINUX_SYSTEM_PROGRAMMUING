@@ -60,7 +60,9 @@ Process = Memory segment in user space + PCB in kernel space
 There are many process in the system, every process have their own memoery segment and they have correspondig PCB in kernel space.
 
   text segment= Contains Machine instruction corresponding to compiled program.
+  
   BSS segment=Block started by symbol used to store the uninitialized global vatiables.
+  
   Data Segment= Data segment is used to store the initialized global variables and intitalized static local variables
   
 ![](./Screenshot%202025-08-20%20225316.png)
