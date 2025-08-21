@@ -103,3 +103,67 @@ A Process which invoke fork system call is called **parent proccess** and the ne
 
 &rarr;Before fork() invokation there is only one process but after fork() invokation there are two process i.e, child process and parent process.
 
+&rarr;By using the conditional statement after fork(), we ensure that parent process and child process will execute different block of codes. If conditional statements are not present then parent and child process will execute same block of code.
+
+
+&rarr;To this conditional statement we pass return value of fork().
+
+![](./images/fork()%20execution.png)
+
+Form the above child process execution is not going to start from the main function() it start after the fork().
+
+&rarr;__fork() returns twice once in parent process and once in child process__
+
+- fork() returns pid of child process in parent process
+- fork() return "0" in the child process.
+
+## Orphan Process and Demon Process(Zombie Process)
+
+- ## Orphan Process
+
+  - If parent process terminates even before child process is called orphan process.
+  
+  Ex:   main(){
+    id=fork();
+    
+    if(id==0){
+      sleep(60);
+    
+    }
+    
+    else {
+      
+    sleep(30);
+    
+    }
+  
+  }
+
+  &rarr; Once the main function terminates then the parent process will be terminated. The memory segment and PCB get loaded from user space and kernel space respectively.
+
+  &rarr; The PPID of the orphan process is '1', it takes PID of the init process. Init process is the first process od OS boot.
+
+  __Exit Vs return__
+
+  &rarr; The returns takes return to the locatipn where function is invoked. Where as exit terminates the entire function.
+
+  ![](./images/Exit%20vs%20return.png)
+
+&rarr;
+The kernel by default submit the status of child process to parent process and it is done by using command __wait(&stat)__.
+
+&rarr; By using wait() we can get the exit code of child process in parent process.
+
+&rarr; wait() is a "blocking call".
+
+&rarr; wait() comes out of the blocking state only when the child process get terminates.
+
+![](./images/wait().png)
+
+&rarr; Inside the child process wait() should not be executed so it is necessary to use exit().
+
+__Note :__ When the exit is called then process is removed, i.e, removed means memory segment get eliminated and exit status get stored in PCB, after submitting the PCB exit status to parent PCB in kernel space, the child PCB get destroyed.
+
+![](./images/Exitcode.png)
+
+&rarr; If no wait() was there then we cannot get access to exit status of child process. Althrough the memory segments
