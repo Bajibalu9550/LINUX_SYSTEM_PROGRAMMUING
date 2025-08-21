@@ -166,4 +166,137 @@ __Note :__ When the exit is called then process is removed, i.e, removed means m
 
 ![](./images/Exitcode.png)
 
-&rarr; If no wait() was there then we cannot get access to exit status of child process. Althrough the memory segments
+&rarr; If no wait() was there then we cannot get access to exit status of child process. Althrough the memory segments will be erased but PCB content will be then on calling exit(5);
+&rarr;Using command ps -af we can be able to see the child process.
+
+- ## Zombie process or Demon process
+
+  - parent process dies but still has entry in the process table is called __Zombie process__ or defunt process or Demon process.
+
+  - Process can be terminated by using the command "kill"   [kill -g pid of the process]
+  
+  - But Zombie process can be terminated by using "kill" command because memory segment of child process has be erased so no process because of no any instruction set.
+
+  ![](./images/Exit%20status.png)
+
+  - The exit code of the child process is passed to argument of wait() in parent process
+
+  - To extract the exit code, which is present in second byte od variable 
+
+  `````
+  WEXITSTATUS(stat);
+  ```````` 
+
+  &rarr; WEXITSTATUS(stat) is a predefined macro which extract 1 byte of exit code from the 4 byte variable.
+
+- ## fork() system call
+
+  - Driver can never initiate I/O request. Application can initiate I/O request
+
+  - One driver can access a single device if the devices are same in nature then one driver can access those I/O devices also. When more than one drivers interact woith single I/O devices there arises improper functioning.
+
+  - We can not have multiple drivers accessing single device
+
+  - we can have multiple applications sending request to single driver.
+
+  - Application sends an request to drivers by using system call.
+
+  - Hardware/Device can initiate a request by using __" Hardware interrupts"__
+
+  ![](./images/request.png)
+
+  __Note :__
+
+    - There are specific group of system calls used to send request to driver from application those are called __"Basic I/O calls"__.
+
+  ### Use of fork()
+    
+    1. To create multiple applications from single application.
+    
+    2. Shell program internally uses fork() + exec() family system call.
+
+    3. In client and server progrmming we use fork() system call
+
+  __Note :__
+
+    - wait() returns the pid of the child process that haas been terminated.
+
+                        pid=wait(&stat);
+
+  - 1 byte exit code comming from child process. Remaining 3 bytes contain the information about normal/abnormal termination of the child process. In case of abnormal termination the signal used to terminate the specific child process is specified.
+
+  __Q) What are the variants of wait system call?__
+
+    1. wait() : blocks until child process terminates.
+
+    2. waitpid() : Basical;y it takes three arguments and it comes to unblocking state when any specific child process terminates.
+
+  __Note :__
+
+    - vfork() is always combined with the exec() family of calls. to understand vfork() we need to understand the virtual memory which requires furthur concept of pageing technique and address tranlation.
+  __why do not we run progrm with in hard disk (or) why do we copy progrm to RAM for execurion.__
+
+    1. Accesing a data present in hard-disk is slower mechanism compared to RAM
+
+    2. Data can be accessed from hard-disk block-by-block, where as from RAM we can access byte-by-byte.
+
+    ![](./images/progrm%20copy%20to%20ram.png)
+
+    - Memory in CPU in the form of register and we use register name to refer to the CPU register.
+
+    - Basic units of memory are bit and bytes.
+
+    - RAM are divided into byte by byte location or RAM. Memory are splitted into byte by byte memory locations and we use pointer yo store the address of RAM
+
+    - To copy the data from RAM to CPU we are using CPU instructions __"LDA"__(load);
+
+    -  To copy the data from CPU to RAM we are using CPU instruction __"STR"__(store).
+## Virtual Memory
+- Suppose we have four process already loaded into RAM and we want to load one more process.
+
+     ![](./images/Virtual%20memory.png)
+  
+  <u><b><big>Posibilities:</big></b></u>
+
+    1. wait until one of the process terminates.
+      
+        - Actually we do not know the how much time takes a process to terminate.It depends upon processor. so not possible
+    2. Terminates one of the process in between
+
+        - For termination of process in between we need to have problem in the code. Again not possible
+    3. Try to findout segment of these process which are not used longer duration of time
+
+       - Yes, it can be done
+
+    &rarr; In order to findout the segments which are not used for longer duration of in a process we need to follow some alogorithm.
+
+    - Step-1: Hard disk is consist of two segments i.e, __"Swap area"__ in Linux and __"Banking storage"__ in windows and memory segments of process which are not used for longer duration we move to swap area of hard disk.
+
+  __Note :__
+     
+     - It is not mendatory to have all segments in RAM for eecution. Some of the process segments may be there in swap area and still we can execute the process.
+
+       ![](./images/Swap%20area%20of%20ahrd%20disk.png)
+    - The empty spaces that has been generated are not continuous memory location. It is because some of the memory segment of process which does not last for longer duration of time has been copy to swap area of hard disk.
+
+    - Since we have empty spaces load the new process, for that new process segments has to be splitted and load to nin-continuous or empty memory locations of RAM.
+  
+  __Note :__
+
+    - To run a program, memory segments need not be continuous memory locations. It also can be uncontinuous memory locations.
+
+    __Problems :__
+
+    1. Keep track of segments of process copied to the swap area of hard disk.
+
+    2. Also keep track of segments of new process which are present in uncontinuous memory locations.
+
+  &rarr; To overcome these two problems we use __"Pagening Techniques"__. 
+
+
+
+
+
+
+    
+    
